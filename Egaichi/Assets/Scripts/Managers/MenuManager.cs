@@ -1,7 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class MenuManager : MonoBehaviour {
+public class MenuManager : SingletonMonoBehavior<MenuManager> {
+
+	/// <summary>
+	/// メニューオブジェクト
+	/// </summary>
+	public GameObject[] menuObjects;
+
+	/// <summary>
+	/// クリアしたステージに使用する画像
+	/// </summary>
+	public Sprite clearMenuSprite;
+
+	/// <summary>
+	/// クリアしていないステージに使用する画像
+	/// </summary>
+	public Sprite noClearMenuSprite;
 
 	// Use this for initialization
 	void Start () {
@@ -15,56 +31,77 @@ public class MenuManager : MonoBehaviour {
 
 	public void OnTapStage01()
 	{
-		Debug.Log("stage01");
 		StageNumber.stageNumber = 0;
-		Application.LoadLevel("Game");
+		TapStage();
 	}
 
 	public void OnTapStage02()
 	{
 		StageNumber.stageNumber = 1;
-		Application.LoadLevel("Game");
+		TapStage();
 	}
 
 	public void OnTapStage03()
 	{
 		StageNumber.stageNumber = 2;
-		Application.LoadLevel("Game");
+		TapStage();
 	}
 
 	public void OnTapStage04()
 	{
 		StageNumber.stageNumber = 3;
-		Application.LoadLevel("Game");
+		TapStage();
 	}
 
 	public void OnTapStage05()
 	{
 		StageNumber.stageNumber = 4;
-		Application.LoadLevel("Game");
-	}
+		TapStage();
+    }
 
 	public void OnTapStage06()
 	{
 		StageNumber.stageNumber = 5;
-		Application.LoadLevel("Game");
-	}
+		TapStage();
+    }
 
 	public void OnTapStage07()
 	{
 		StageNumber.stageNumber = 6;
-		Application.LoadLevel("Game");
-	}
+		TapStage();
+    }
 
 	public void OnTapStage08()
 	{
 		StageNumber.stageNumber = 7;
-		Application.LoadLevel("Game");
-	}
+		TapStage();
+    }
 
 	public void OnTapStage09()
 	{
 		StageNumber.stageNumber = 8;
-		Application.LoadLevel("Game");
+		TapStage();
+    }
+
+	private void TapStage()
+	{
+		AudioManager.I.PlayAudio("seSelect");
+		SceneStateManager.I.LoadLevel(2);
+		StageSelectManager.I.SelectStage(StageNumber.stageNumber);
+		ButtonManager.I.startP = GameObject.Find("StartPoint");
+	}
+
+	/// <summary>
+	/// 各ステージのクリア状況を反映
+	/// </summary>
+	public void ClearSituationReflection()
+	{
+		for(int i = 0; i < menuObjects.Length;i++)
+		{
+			int isClear = PlayerPrefs.GetInt("Stage" + i, 0);
+			Debug.Log(isClear);
+			if (isClear == 1) menuObjects[i].GetComponent<Image>().sprite = clearMenuSprite;
+			else { menuObjects[i].GetComponent<Image>().sprite = noClearMenuSprite; }
+		}
 	}
 }

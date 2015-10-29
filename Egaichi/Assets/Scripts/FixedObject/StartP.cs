@@ -20,13 +20,11 @@ public class StartP : MonoBehaviour {
 		if (b) { Destroy(b); }
 	}
 	public void alpha_start(bool start){
-
+		Debug.Log(transform.position);
 		if (start) {
 			GetComponent<MeshRenderer>().enabled=true;
-			GetComponentInChildren<MeshRenderer>().enabled=true;
 		} else if (!start) {
 			GetComponent<MeshRenderer>().enabled=false;
-			GetComponentInChildren<MeshRenderer>().enabled=false;
 		}
 	}
 }

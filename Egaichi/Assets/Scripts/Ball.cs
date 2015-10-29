@@ -26,6 +26,7 @@ public class Ball : MonoBehaviour {
 	
 	}
 	void OnCollisionEnter(Collision C){
+		AudioManager.I.PlayAudio("seReflect");
 		//GetComponent<SphereCollider>().material=slide;
 		/*if(C.gameObject.tag=="Curve"){
 			GetComponent<SphereCollider>().material=slide;
